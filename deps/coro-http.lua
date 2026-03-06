@@ -34,10 +34,12 @@ local function createServer(host, port, onConnect)
       end
       local body = table.concat(parts)
       head, body = onConnect(head, body, socket)
-      write(head)
-      if body then write(body) end
-      write("")
-      if not head.keepAlive then break end
+      if head then
+        write(head)
+        if body then write(body) end
+        write("")
+        if not head.keepAlive then break end
+      end
     end
     write()
   end)
